@@ -20,6 +20,9 @@ table.gridtable th {
     background-color: #dedede;
 }
 table.gridtable td {
+    text-align: center;
+    align-content: center;
+    align-items: center;
     border-width: 1px;
     padding: 8px;
     border-style: solid;
