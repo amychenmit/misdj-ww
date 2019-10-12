@@ -1,0 +1,29 @@
+{% extends 'note/base.html' %}
+{% load static %}
+{% block content %}
+
+<h1><br>10/12 OPEN BOOK QUIZ</h1>
+
+
+<table id="customers">
+    <tr>
+        <th></th>
+        <th>Week</th>
+        <th>year</th>
+        <th>Date From</th>
+        <th>Date to</th>
+    </tr>
+    {% for x in list %}
+    <tr>
+        <th></th>
+        <th>Number</th>
+        <th>{{x.num}}</th>
+        <th>{{x.yr}}</th>
+        <th>{{x.date1}}</th>
+        <th>{{x.date2}}</th>
+    </tr>
+</table>
+
+
+{% endfor %}
+{% endblock %}
