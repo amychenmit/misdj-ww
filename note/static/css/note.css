@@ -1,16 +1,29 @@
-table {
+table.gridtable {
+    font-family: verdana,arial,sans-serif;
+    font-size:16px;
+    /*color:#333333;*/
+    color:black;
+    border-width: 1px;
+    /*border-color: #666666;*/
+    border-color: #666666;
     border-collapse: collapse;
-    width: 100%;
-}
-  
-th, td {
-    text-align: left;
+  }
+table.gridtable th {
+    text-align: center;
+    align-content: center;
+    align-items: center;
+    border-width: 1px;
     padding: 8px;
+    border-style: solid;
+    /*border-color: #666666;*/
+    border-color: #666666;
+    background-color: #dedede;
 }
-  
-tr:nth-child(even){background-color: #f2f2f2}
-  
-th {
-    background-color: #4CAF50;
-    color: white;
+table.gridtable td {
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    /*border-color: #666666;*/
+    border-color: #666666;
+    background-color: #ffffff;
 }

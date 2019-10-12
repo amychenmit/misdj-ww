@@ -3,10 +3,10 @@
 {% block content %}
 
 <h1><br></h1>
-<h1><a href="/">10/12 OPEN BOOK QUIZ</a></h1>
+<h1>10/12 OPEN BOOK QUIZ</h1>
 
 
-<table>
+<table class='gridtable'>
     <tr>
         <th></th>
         <th>year</th>
@@ -16,11 +16,11 @@
     </tr>
     {% for x in list %}  
     <tr>
-        <th>{{x.num}}</th>
-        <th>{{x.yr}}</th>
-        <th>{{x.num}}</th>
-        <th>{{x.date1}}</th>
-        <th>{{x.date2}}</th>
+        <th>{{ forloop.counter }}</th>
+        <td>{{x.yr}}</td>
+        <td>{{x.num}}</td>
+        <td>{{x.date1|date:"Y-m-d"}}</td>
+        <td>{{x.date2|date:"Y-m-d"}}</td>
     </tr>
     {% endfor %}
 </table>
