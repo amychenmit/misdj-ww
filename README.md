@@ -5,6 +5,8 @@
 ## Homework
 - What is a bash script?
 - What's the different between 'Git clone' and 'download zip file directly'?
+- 理解的是 def init_ww(request) 是怎麼做到的，關掉後才能正常刪減東西，打開後又全部更新好了！
+- 可以讀 SHELL 了 https://docs.djangoproject.com/en/2.2/intro/tutorial02/
 
 ## Open book quiz
 - Table

@@ -22,7 +22,7 @@ def ww2(request):
     context = {'list': list}
     return render(request, 'note/ww2.html', context)
 
-'''def init_ww(request):
+def init_ww(request):
     def getList():
         return Wk.objects.order_by('yr','num')
     def getCnt():
@@ -39,11 +39,11 @@ def ww2(request):
     
     d1='2018-12-31'
     date1 = datetime.strptime(d1, "%Y-%m-%d")
-    date2 =date1 + timedelta(days=7)
+    date2 =date1 + timedelta(days=6) 
    
     for num in range(1,53):
         # print(num) # to ensure num is 1,2,3 ..., 52
-        date2 =date1 + timedelta(days=7)
+        date2 =date1 + timedelta(days=6)
         
         x =Wk(yr=2019,num=num,date1=date1,date2=date2)
         x.save()
@@ -57,4 +57,4 @@ def ww2(request):
     key={'k1':k1,'k2':k2}
     list = getList()
     context = {'user': user,'key': key,'list':list }
-    return render(request, 'note/init_ww.html', context)'''
+    return render(request, 'note/ww.html', context)
