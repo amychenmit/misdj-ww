@@ -2,12 +2,29 @@
 {% load static %}
 {% block content %}
 
-<h1><br>Amy's Note</h1>
+<h1><br></h1>
+<h1><a href="/">10/12 OPEN BOOK QUIZ</a></h1>
 
-{% for x in list %}
-<hr>
-<h3>{{x.yr}} {{x.num}}</h3>
-<pre>{{x.date1}} - {{x.date2}} </pre>
 
-{% endfor %}
+<table>
+    <tr>
+        <th></th>
+        <th>year</th>
+        <th>Week</th>
+        <th>Date From</th>
+        <th>Date to</th>
+    </tr>
+    {% for x in list %}  
+    <tr>
+        <th>{{x.num}}</th>
+        <th>{{x.yr}}</th>
+        <th>{{x.num}}</th>
+        <th>{{x.date1}}</th>
+        <th>{{x.date2}}</th>
+    </tr>
+    {% endfor %}
+</table>
+
+
+
 {% endblock %}
