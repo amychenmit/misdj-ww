@@ -6,6 +6,8 @@ from datetime import datetime
 
 from .models import Note
 from .models import Wk
+from .models import Work
+
 
 def index(request):
     list = Note.objects.all()
@@ -21,6 +23,11 @@ def ww2(request):
     list = Wk.objects.all()
     context = {'list': list}
     return render(request, 'note/ww2.html', context)
+
+def work(request):
+    list = Work.objects.all()
+    context = {'list': list}
+    return render(request, 'note/work.html', context)
 
 def init_ww(request):
     def getList():

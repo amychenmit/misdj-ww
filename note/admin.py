@@ -3,6 +3,22 @@ from django.contrib import admin
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 
+# Work project
+from .models import Work
+class WorkResource(resources.ModelResource):
+    class Meta:
+        model = Work
+
+class WorkAdmin(ImportExportModelAdmin):
+    resource_class = WorkResource
+    # inlines = [BuyFoodDetInline,CookedInline]
+    list_display = ('date1', 'place','worker','thing')
+    list_filter = ['place']
+    # search_fields = ['date1','data']
+   
+admin.site.register(Work, WorkAdmin)
+
+
 # NOTE： WW project
 from .models import Wk
 class WkResource(resources.ModelResource):

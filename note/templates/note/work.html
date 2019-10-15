@@ -1,0 +1,28 @@
+{% extends 'note/base.html' %}
+{% load static %}
+{% block content %}
+
+<h1><br></h1>
+<h1>10/14 匯入資料做報表</h1>
+
+
+<table class='gridtable'>
+    <tr>
+        <th>用工日期</th>
+        <th>用工地點</th>
+        <th>工人編號</th>
+        <th>工作內容</th>
+    </tr>
+    {% for x in list %}  
+    <tr>
+        <td>{{x.date1|date:"Y-m-d"}}</td>
+        <td>{{x.place}}</td>
+        <td>{{x.worker}}</td>
+        <td>{{x.thing}}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+
+{% endblock %}

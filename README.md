@@ -3,7 +3,8 @@
 
 # 10/12 #
 ## Homework
-- What is a bash script?
+- What is a bash script? 
+    - 如何可以更節省，目前發現有三種方式可以叫出 script. 10/13 可以用 ./go.sh 跑 go 三步驟！
 - What's the different between 'Git clone' and 'download zip file directly'?
 - 理解的是 def init_ww(request) 是怎麼做到的，關掉後才能正常刪減東西，打開後又全部更新好了！
 - 可以讀 SHELL 了 https://docs.djangoproject.com/en/2.2/intro/tutorial02/
