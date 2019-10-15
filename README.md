@@ -14,3 +14,10 @@
 
 ![image](https://github.com/amychenmit/misdj-ww/blob/master/H1.png)
 
+
+
+# Challenge Action Reminder
+
+- 進階：每個值之間應該是 ManyToMany 的關係，這樣才可以反查
+
+

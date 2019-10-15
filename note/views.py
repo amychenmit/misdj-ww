@@ -1,5 +1,7 @@
 from django.shortcuts import render
 
+from django.db.models import Count
+
 from datetime import date, timedelta
 from datetime import datetime
 # https://kaiching.org/pydoing/py/python-library-datetime.html
@@ -29,6 +31,30 @@ def work(request):
     context = {'list': list}
     return render(request, 'note/work.html', context)
 
+
+#實驗
+def count(request):
+    list = Work.objects.values('place')
+    a = Work.objects.values('place').annotate(Count('thing'))
+    b = Work.objects.values('thing').annotate(Count('worker'))
+    context = {'list': list, 'a':a}
+    return render(request, 'note/count.html', context)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def init_ww(request):
     def getList():
         return Wk.objects.order_by('yr','num')
@@ -46,16 +72,16 @@ def init_ww(request):
     
     d1='2018-12-31'
     date1 = datetime.strptime(d1, "%Y-%m-%d")
-    date2 =date1 + timedelta(days=6) 
+    date2 = date1 + timedelta(days=6) 
    
     for num in range(1,53):
         # print(num) # to ensure num is 1,2,3 ..., 52
-        date2 =date1 + timedelta(days=6)
+        date2 = date1 + timedelta(days=6)
         
         x =Wk(yr=2019,num=num,date1=date1,date2=date2)
         x.save()
         
-        date1 =date2 + timedelta(days=1)
+        date1 = date2 + timedelta(days=1)
         
     k2 = getCnt()
     
