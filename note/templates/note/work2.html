@@ -1,0 +1,276 @@
+{% extends 'note/base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- 10/15 嘗試 Count worker for each day -->
+<!-- Work.objects.filter(place='三園',thing='打葯',date1='2019-07-01') -->
+
+現在時間 {% now "Y-m-d H:i" %}
+
+
+
+
+<h1>a1</h1>
+
+<h2>keys</h2>
+{{keys}}
+
+<h2>待加強的部分</h2>
+利用環圈顯示 7-9 月的各數據：
+
+<table class='gridtable'>
+        <tr>
+            <td colspan = 2></td>
+            <th colspan = 3>整季度</th>
+            <th colspan = 3>2019-07</th>
+            <th colspan = 3>2019-08</th>
+            <th colspan = 3>2019-09</th>
+
+        </tr>
+        <tr>
+            <th></th>
+            <th>地點</th>
+            <th>天數</th>
+            <th>人數</th>
+            <th>人天</th>
+            <th>天數</th>
+            <th>人數</th>
+            <th>人天</th>
+            <th>天數</th>
+            <th>人數</th>
+            <th>人天</th>
+            <th>天數</th>
+            <th>人數</th>
+            <th>人天</th>
+        </tr>
+    {% for x in list %} 
+        <tr> 
+            <td>{{ forloop.counter }}</td>
+            <td>{{ x.place }}</td>
+            <td>{{ x.num_dates }}</td>
+            <td>{{ x.num_worker }}</td>   
+            <td>{{ x.worktimes }}</td>
+
+            <td>{{ x.7num_dates|cut:"0"  }}</td>
+            <td>{{ x.7num_worker|cut:"0"  }}</td>   
+            <td>{{ x.7worktimes|cut:"0"  }}</td>
+            <td>{{ x.8num_dates|cut:"0"  }}</td>
+            <td>{{ x.8num_worker|cut:"0"  }}</td>   
+            <td>{{ x.8worktimes|cut:"0"  }}</td>
+            <td>{{ x.9num_dates|cut:"0"  }}</td>
+            <td>{{ x.9num_worker|cut:"0"  }}</td>   
+            <td>{{ x.9worktimes|cut:"0"  }}</td>
+        </tr>
+        
+    {% endfor %}
+</table>
+
+{% endblock %}
+
+<!--
+<h1>a1</h1>
+
+<table class='gridtable'>
+        <tr>
+            <td colspan = 2></td>
+            <th colspan = 3>整季度</th>
+            <th colspan = 3>2019-07</th>
+            <th colspan = 3>2019-08</th>
+            <th colspan = 3>2019-09</th>
+
+        </tr>
+        <tr>
+            <th></th>
+            <th>地點</th>
+            <th>天數</th>
+            <th>人數</th>
+            <th>人天</th>
+            <th>天數</th>
+            <th>人數</th>
+            <th>人天</th>
+            <th>天數</th>
+            <th>人數</th>
+            <th>人天</th>
+            <th>天數</th>
+            <th>人數</th>
+            <th>人天</th>
+        </tr>
+    {% for x in list %} 
+        <tr> 
+            <td>{{ forloop.counter }}</td>
+            <td>{{ x.place }}</td>
+            <td>{{ x.num_dates }}</td>
+            <td>{{ x.num_worker }}</td>   
+            <td>{{ x.worktimes }}</td>
+            <td>{{ x.m1num_dates|cut:"0"  }}</td>
+            <td>{{ x.m1num_worker|cut:"0"  }}</td>   
+            <td>{{ x.m1worktimes|cut:"0"  }}</td>
+            <td>{{ x.m2num_dates|cut:"0"  }}</td>
+            <td>{{ x.m2num_worker|cut:"0"  }}</td>   
+            <td>{{ x.m2worktimes|cut:"0"  }}</td>
+            <td>{{ x.m3num_dates|cut:"0"  }}</td>
+            <td>{{ x.m3num_worker|cut:"0"  }}</td>   
+            <td>{{ x.m3worktimes|cut:"0"  }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+
+
+
+
+
+<br>
+<br>
+<br>
+<h1>用 view 包東西呈現</h1>
+問題：從ｙ中無法叫出 place <br>
+<br>
+<br>
+
+
+
+<h3>dict_test</h3>
+{{dict_test}}
+<br>
+<table class='gridtable'>
+        <tr>
+                <th>工作地點</th>
+                <th>month</th>
+                <th>天數</th>
+                <th>人數</th>
+                <th>人天</th>
+                <th>工作地點</th>
+                <th>month</th>
+                <th>天數</th>
+                <th>人數</th>
+                <th>人天</th>
+                <th>工作地點</th>
+                <th>month</th>
+                <th>天數</th>
+                <th>人數</th>
+                <th>人天</th>
+            </tr>
+        {% for y in dict_test %} 
+        <tr>
+            <td>{{y}}</td>
+            {% for x in y.list %} 
+            
+            <td>{{ x }}</td>
+
+            {% endfor %}
+        </tr>
+        {% endfor %}
+        </table>
+        
+
+
+<h3>c</h3>
+<table class='gridtable'>
+
+        {% for x in c %} 
+            <tr> 
+                <td>{{ x.place }}</td>
+                <td>{{ x.num_dates }}</td>
+                <td>{{ x.num_worker }}</td>   
+                <td>{{ x.worktimes }}</td>
+            </tr>
+        {% endfor %}
+</table>
+
+<br>
+<br>
+<br>
+
+
+
+
+
+    這個出發點是以月份為主，我要拆以園區為主？
+
+
+
+            <h3>如何把 c & d 合併？<br></h3>
+成為<br>
+QuerySet [{'place': '112園', 'worker__count': 2, 'date1__count': 1}...以此類推]
+<br>
+
+<h3>b</h3>
+{{b}}
+<br>
+
+<h3>b1</h3>
+{{b7}}
+<br>
+
+<h3>a</h3>
+{{a}}}
+<br>
+
+<h3>a1</h3>
+{% for x in a1 %} 
+{{x.month|date:"m"}}
+{% endfor %}
+<br>
+
+<h3>b</h3>
+{{b}}
+<br>
+
+-->
+
+
+
+<!-- 合併儲存隔的時候可能會用到
+>>> Work.objects.values('place').annotate(Count('thing'))
+<QuerySet [{'place': '112園', 'thing__count': 2}, {'place': '17園', 'thing__count': 782}, {'place': '18園', 'thing__count': 186}, {'place': '1園', 'thing__count': 161}, {'place': '34園', 'thing__count': 87}, {'place': '3園', 'thing__count': 160}, {'place': '41園', 'thing__count': 145}, {'place': '51園', 'thing__count': 58}, {'place': '58園', 'thing__count': 261}, {'place': '59園', 'thing__count': 474}, {'place': '6園', 'thing__count': 9}, {'place': '73園', 'thing__count': 364}, {'place': '89園', 'thing__count': 769}, {'place': '8園', 'thing__count': 78}, {'place': '9園', 'thing__count': 30}, {'place': '大棚2區', 'thing__count': 1417}]>-->
+
+<!-- sort 工作內容的時候可能會用到
+Work.objects.filter(place='3園').values('thing').annotate(Count('worker'))
+<QuerySet [{'thing': '修复围栏', 'worker__count': 2}, {'thing': '剪枝', 'worker__count': 1}, {'thing': '割草', 'worker__count': 21}, {'thing': '打药', 'worker__count': 17}, {'thing': '打除草剂', 'worker__count': 5}, {'thing': '打除草药', 'worker__count': 1}, {'thing': '摘李子', 'worker__count': 14}, {'thing': '施肥', 'worker__count': 4}, {'thing': '李子采收', 'worker__count': 2}, {'thing': '李树剪枝', 'worker__count': 1}, {'thing': '李树割草', 'worker__count': 6}, {'thing': '李树施肥', 'worker__count': 1}, {'thing': '李树浇水', 'worker__count': 8}, {'thing': '浇水', 'worker__count': 44}, {'thing': '青梅割草', 'worker__count': 27}, {'thing': '青梅浇水', 'worker__count': 6}]>
+
+
+
+<h1>用 regroup 呈現表格</h1>
+要每個地點的每個月都是單一值才可以用 regroup
+
+{% regroup list by place as list2 %}
+
+<table class='gridtable'>
+        <tr>
+                <th></th>
+                <th colspan = 4>2019-07</th>
+                <th colspan = 4>2019-08</th>
+                <th colspan = 4>2019-09</th>
+
+        </tr>
+        <tr>
+            <th>工作地點</th>
+            <th>month</th>
+            <th>天數</th>
+            <th>人數</th>
+            <th>人天</th>
+            <th>month</th>
+            <th>天數</th>
+            <th>人數</th>
+            <th>人天</th>
+            <th>month</th>
+            <th>天數</th>
+            <th>人數</th>
+            <th>人天</th>
+        </tr>
+        
+        {% for y in list2 %}
+      
+            <tr> 
+                <td>{{ y.grouper }}</td>
+                {% for x in y.list %}
+                <td>{{ x.date1__month }}</td>
+                <td>{{ x.num_dates }}</td>
+                <td>{{ x.num_worker }}</td>   
+                <td>{{ x.worktimes }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+</table>
+    

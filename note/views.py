@@ -1,14 +1,20 @@
 from django.shortcuts import render
 
 from django.db.models import Count
+from django.db.models.functions import TruncMonth
+
+
 
 from datetime import date, timedelta
 from datetime import datetime
+from itertools import chain
+
 # https://kaiching.org/pydoing/py/python-library-datetime.html
 
 from .models import Note
 from .models import Wk
 from .models import Work
+from .models import Work2
 
 
 def index(request):
@@ -26,31 +32,70 @@ def ww2(request):
     context = {'list': list}
     return render(request, 'note/ww2.html', context)
 
+
+#表格 open quiz
 def work(request):
     list = Work.objects.all()
     context = {'list': list}
     return render(request, 'note/work.html', context)
 
+"""
+    list1 = Work.objects.values('place', 'date1__year', 'date1__month').annotate(
+        num_dates=Count('date1__month', distinct = True) , num_worker=Count('worker', distinct = True), worktimes=Count('id')).order_by('place')
+    
+    temp_p = Work.objects.order_by('place').values('place').distinct()
+    dis_p = temp_p.values_list('place', flat=True).order_by('place')
 
-#實驗
-def count(request):
-    list = Work.objects.values('place')
-    a = Work.objects.values('place').annotate(Count('thing'))
-    b = Work.objects.values('thing').annotate(Count('worker'))
-    context = {'list': list, 'a':a}
-    return render(request, 'note/count.html', context)
+    dis_m = {7,8,9}
 
-
-
-
-
-
-
-
-
+    print("DEBUG ... ")
+    for i in dis_p:
+        
+        for j in dis_m
+    
+            try x = d.filter(place=i, date1__month=j)
 
 
+"""
 
+#妹妹的實驗室：這個寫法可以應付多個不限定月份
+def work3(request):
+
+    list0={}
+    
+    #共15個
+    dis_p = Work.objects.values_list('place', flat=True).distinct().order_by('place')
+    #共3個
+    dis_m = Work.objects.order_by('date1__month').values('date1__month').distinct()
+
+    
+    for i in range(dis_p.count()):
+        #現在只可支援連續的月份
+        for j in range(7,10):
+
+            #目前的寫法如果 place 超過 99 筆會有錯誤，到時候改成 *1000就可以了
+            list0[i+100*j]={'place':dis_p[i], 'date1__month':j}
+    
+    list0 = list0.values()
+
+    list1 = Work.objects.values('place', 'date1__year', 'date1__month').annotate(
+        num_dates=Count('date1__month', distinct = True) , num_worker=Count('worker', distinct = True), worktimes=Count('id')).order_by('place')
+    
+    for x in list0:
+
+        list2 = list1.filter(place=x['place'],date1__month=x['date1__month'])
+
+        x['date1__year']=2019
+        x['New_num_dates']=x['New_num_worker']=x['New_worktimes']=0
+        
+
+        if list2:
+            x['New_num_dates']=list2[0]['num_dates']
+            x['New_num_worker']=list2[0]['num_worker']
+            x['New_worktimes']=list2[0]['worktimes']
+
+    context = {'list': list0}
+    return render(request, 'note/work3.html', context)
 
 
 
@@ -91,3 +136,69 @@ def init_ww(request):
     list = getList()
     context = {'user': user,'key': key,'list':list }
     return render(request, 'note/ww.html', context)
+
+
+
+#成功版本
+def work2(request):
+
+    #不能解決算 m 的方式，因為他會是個<QuerySet [(7,), (8,), (9,)]>
+    list_month = Work.objects.values_list('date1__month').distinct()
+    for z in list_month: 
+        z[0]
+    print(list_month)
+
+    list0 = Work.objects.values('place').annotate(
+    num_dates=Count('date1', distinct = True) , num_worker=Count('worker', distinct = True), worktimes=Count('id'))
+
+
+
+    for x in list0:
+        for i in {7,8,9}:
+            listi = Work.objects.filter(place=x['place'],date1__year=2019,date1__month=i).values('place').annotate(
+            num_dates=Count('date1', distinct = True) , num_worker=Count('worker', distinct = True), worktimes=Count('id')).order_by('place')
+
+            x[str(i)+'num_dates']=x[str(i)+'num_worker']=x[str(i)+'worktimes']=0
+
+            #如果list1有值的话，就运行缩排那些指令。       
+            if listi:
+                x[str(i)+'num_dates']=listi[0]['num_dates']
+                x[str(i)+'num_worker']=listi[0]['num_worker']
+                x[str(i)+'worktimes']=listi[0]['worktimes']
+
+    print(list0)
+    list_keys = list0[0].keys()
+
+    context = {'list': list0, 'month':list_month, 'keys':list_keys}
+    return render(request, 'note/work2.html', context)
+
+#迴圈版本
+
+"""
+
+def work2(request):
+
+    list0 = Work.objects.values('place').annotate(
+    num_dates=Count('date1', distinct = True) , num_worker=Count('worker', distinct = True), worktimes=Count('id'))
+
+    list_month = {7,8,9}
+
+    for x in list0:
+
+        for i in list_month:
+            listi = Work.objects.filter(place=x['place'],date1__year=2019,date1__month=i).values('place').annotate(
+            num_dates=Count('date1', distinct = True) , num_worker=Count('worker', distinct = True), worktimes=Count('id'))
+
+            x[str(i)+'num_dates']=x[str(i)+'num_worker']=x[str(i)+'worktimes']=0
+
+            #這個 if 令我百思不解
+            if listi:
+                x[str(i)+'num_dates']=listi[0]['num_dates']
+                x[str(i)+'num_worker']=listi[0]['num_worker']
+                x[str(i)+'worktimes']=listi[0]['worktimes']
+
+    list_keys = list0[0].keys()
+
+    context = {'list': list0, 'month':list_month, 'keys':list_keys}
+    return render(request, 'note/work2.html', context)
+    """

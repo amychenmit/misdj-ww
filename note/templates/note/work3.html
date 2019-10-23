@@ -1,0 +1,51 @@
+{% extends 'note/base.html' %}
+{% load static %}
+{% block content %}
+
+
+現在時間 {% now "Y-m-d H:i" %}
+
+<h1>用 regroup 呈現表格</h1>
+要每個地點的每個月都是單一值才可以用 regroup
+
+{% regroup list by place as list2 %}
+
+<table class='gridtable'>
+        <tr>
+            <th></th>
+            <th colspan = 4>2019-07</th>
+            <th colspan = 4>2019-08</th>
+            <th colspan = 4>2019-09</th>
+
+        </tr>
+        <tr>
+            <th>工作地點</th>
+            <th>month</th>
+            <th>天數</th>
+            <th>人數</th>
+            <th>人天</th>
+            <th>month</th>
+            <th>天數</th>
+            <th>人數</th>
+            <th>人天</th>
+            <th>month</th>
+            <th>天數</th>
+            <th>人數</th>
+            <th>人天</th>
+        </tr>
+        
+        {% for y in list2 %}
+      
+            <tr> 
+                <td>{{ y.grouper }}</td>
+                {% for x in y.list %}
+                <td>{{ x.date1__month }}</td>
+                <td>{{ x.New_num_dates }}</td>
+                <td>{{ x.New_num_worker }}</td>   
+                <td>{{ x.New_worktimes }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+</table>
+    
+{% endblock %}
