@@ -3,12 +3,10 @@
 {% block content %}
 
 
-
-
-<h1>Regroup 年表</h1>
-在 view 修改 year 的『年份』即可輸出該年的每個月統計總表！
-現在時間 {% now "Y-m-d H:i" %}
 <br>
+<h3>年表統計：{{firstdate.date1}} 至 {{lastdate.date1}}</h3>
+數據更新時間 {% now "Y-m-d H:i" %}
+
 
 <table class='gridtable'>
         <tr>
@@ -41,3 +39,5 @@
 </table>
     
 {% endblock %}
+
+<!--在 view 修改 year 的『年份』即可輸出該年的每個月統計總表！-->

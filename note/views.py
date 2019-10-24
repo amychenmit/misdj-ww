@@ -82,6 +82,9 @@ def work3(request):
     list1 = Work.objects.values('place', 'date1__year', 'date1__month').annotate(
         num_dates=Count('date1__month', distinct = True) , num_worker=Count('worker', distinct = True), worktimes=Count('id')).order_by('place')
     
+    firstdate = Work.objects.values('date1').order_by('date1').first()
+    lastdate = Work.objects.values('date1').order_by('date1').last()
+
     for x in list0:
 
         list2 = list1.filter(place=x['place'],date1__month=x['date1__month'],date1__year=year)
@@ -94,7 +97,7 @@ def work3(request):
             x['New_num_worker']=list2[0]['num_worker']
             x['New_worktimes']=list2[0]['worktimes']
 
-    context = {'list': list0, 'dis_m':dis_m, 'year':year}
+    context = {'list': list0, 'dis_m':dis_m, 'year':year, 'firstdate':firstdate, 'lastdate':lastdate}
     return render(request, 'note/work3.html', context)
 
 
