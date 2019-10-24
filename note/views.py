@@ -61,20 +61,21 @@ def work(request):
 #妹妹的實驗室：這個寫法可以應付多個不限定月份
 def work3(request):
 
-    list0={}
-    
-    #共15個
+    #輸入想要的年份即可 Generate 整年的數據
+    year = 2019
+    list0={}    
     dis_p = Work.objects.values_list('place', flat=True).distinct().order_by('place')
-    #共3個
+    num_p = dis_p.count()
     dis_m = Work.objects.order_by('date1__month').values('date1__month').distinct()
-
+    num_m = dis_m.count()
     
-    for i in range(dis_p.count()):
+    for i in range(num_p):
         #現在只可支援連續的月份
-        for j in range(7,10):
+        for j in range(num_m):
 
             #目前的寫法如果 place 超過 99 筆會有錯誤，到時候改成 *1000就可以了
-            list0[i+100*j]={'place':dis_p[i], 'date1__month':j}
+            list0[i+100*j]={'place':dis_p[i], 'date1__year':year ,'date1__month':dis_m[j]['date1__month']}
+            
     
     list0 = list0.values()
 
@@ -83,9 +84,8 @@ def work3(request):
     
     for x in list0:
 
-        list2 = list1.filter(place=x['place'],date1__month=x['date1__month'])
+        list2 = list1.filter(place=x['place'],date1__month=x['date1__month'],date1__year=year)
 
-        x['date1__year']=2019
         x['New_num_dates']=x['New_num_worker']=x['New_worktimes']=0
         
 
@@ -94,7 +94,7 @@ def work3(request):
             x['New_num_worker']=list2[0]['num_worker']
             x['New_worktimes']=list2[0]['worktimes']
 
-    context = {'list': list0}
+    context = {'list': list0, 'dis_m':dis_m, 'year':year}
     return render(request, 'note/work3.html', context)
 
 
@@ -191,7 +191,7 @@ def work2(request):
 
             x[str(i)+'num_dates']=x[str(i)+'num_worker']=x[str(i)+'worktimes']=0
 
-            #這個 if 令我百思不解
+       
             if listi:
                 x[str(i)+'num_dates']=listi[0]['num_dates']
                 x[str(i)+'num_worker']=listi[0]['num_worker']

@@ -3,46 +3,38 @@
 {% block content %}
 
 
+
+
+<h1>Regroup 年表</h1>
+在 view 修改 year 的『年份』即可輸出該年的每個月統計總表！
 現在時間 {% now "Y-m-d H:i" %}
-
-<h1>用 regroup 呈現表格</h1>
-要每個地點的每個月都是單一值才可以用 regroup
-
-{% regroup list by place as list2 %}
+<br>
 
 <table class='gridtable'>
         <tr>
             <th></th>
-            <th colspan = 4>2019-07</th>
-            <th colspan = 4>2019-08</th>
-            <th colspan = 4>2019-09</th>
-
+            {% for x in dis_m %}
+            <th colspan = 3>{{year}}-{{x.date1__month}}</th>
+            {% endfor %}
         </tr>
         <tr>
             <th>工作地點</th>
-            <th>month</th>
+            {% for x in dis_m %}
             <th>天數</th>
             <th>人數</th>
             <th>人天</th>
-            <th>month</th>
-            <th>天數</th>
-            <th>人數</th>
-            <th>人天</th>
-            <th>month</th>
-            <th>天數</th>
-            <th>人數</th>
-            <th>人天</th>
+            {% endfor %}
         </tr>
-        
+
+        {% regroup list by place as list2 %}    
         {% for y in list2 %}
-      
+
             <tr> 
                 <td>{{ y.grouper }}</td>
                 {% for x in y.list %}
-                <td>{{ x.date1__month }}</td>
-                <td>{{ x.New_num_dates }}</td>
-                <td>{{ x.New_num_worker }}</td>   
-                <td>{{ x.New_worktimes }}</td>
+                <td>{{ x.New_num_dates|cut:"0" }}</td>
+                <td>{{ x.New_num_worker|cut:"0" }}</td>   
+                <td>{{ x.New_worktimes|cut:"0" }}</td>
                 {% endfor %}
             </tr>
         {% endfor %}
